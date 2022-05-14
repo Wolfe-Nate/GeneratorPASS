@@ -82,36 +82,52 @@ var unique = [
   "/",
   "?",
 ];
-var passArray = "";
-var password = "";
 var generateBtn = document.querySelector("#generate");
+
 function generatePassword() {
-  var size = prompt("Choose between 8-128 characters for your password length");
+  var passArray = [];
+  var size = parseInt(
+    prompt("Choose between 8-128 characters for your password length")
+  );
   console.log(size);
   while (size < 8 || size > 128) {
-    size = prompt("Please Re-enter a valid number 8-128");
+    size = parseInt(prompt("Please Re-enter a valid number 8-128"));
   }
   //chosen length to be used later
-  uppercase = prompt("Y/N for Uppercase letters");
-  lowercase = prompt("Y/N for lowercase letters in password");
-  numbers = prompt("Y/N for numbers in password");
-  special = prompt("Y/N for special characters in password");
-  if ((uppercase == "y", "Y")) {
+  let uppercase = false;
+  let lowercase = false;
+  let numbers = false;
+  let special = false;
+
+  while (!uppercase && !lowercase && !numbers && !special) {
+    uppercase = confirm("Ok for Uppercase letters");
+    lowercase = confirm("Ok for Lowercase letters");
+    numbers = confirm("Ok for numbers in password");
+    special = confirm("OK for special characters in password");
+  }
+  if (uppercase) {
     passArray = passArray.concat(alphaUp);
   }
-  console.log(passArray);
-  if (((lowercase = "y"), "Y")) {
+
+  if (lowercase) {
     passArray = passArray.concat(alphaLow);
   }
-  console.log(passArray);
-  if (((numbers = "y"), "Y")) {
+
+  if (numbers) {
     passArray = passArray.concat(number);
   }
-  console.log(passArray);
-  if (((special = "y"), "Y")) {
+
+  if (special) {
     passArray = passArray.concat(unique);
   }
   console.log(passArray);
+  let password = "";
+  for (var i = 0; i < size; i++) {
+    var characterNumber = Math.floor(Math.random() * passArray.length);
+    password += passArray[characterNumber]; // password = password + passArray[characterNumber]
+    console.log(password);
+  }
+  return password;
 }
 
 // Write password to the #password input
@@ -127,5 +143,5 @@ function writePassword() {
 // console.log(special);
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
-console.log(generatePassword);
+// console.log(generatePassword);
 //Math.floor(Math.random() *
